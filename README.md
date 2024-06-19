@@ -3,6 +3,10 @@
 This simple Java program allows you to monitor your realtime ping to configured endpoints (combined)
 and send windows notifications when your network connection fails or is unstable (elevated ping)
 
+## Requirements
+- Java 17 
+- Windows 10/11
+
 ## Features
 - Warning notifications
 - Monitoring in the background
