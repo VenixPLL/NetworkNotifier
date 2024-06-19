@@ -111,6 +111,13 @@ public class NetworkNotifier {
         }
     }
 
+    public void restartTask(){
+        this.pingService.shutdownNow();
+        this.pingService = Executors.newSingleThreadScheduledExecutor();
+        this.pingService.scheduleAtFixedRate(this.pingingTask,1,this.configuration.getPingInterval(), TimeUnit.SECONDS);
+        System.out.println("Restarted pingingTask");
+    }
+
     public ActionListener getOpenListener(){
         return e -> this.notifierFrame.setVisible(true);
     }

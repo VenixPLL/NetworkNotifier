@@ -25,10 +25,15 @@ public class PingingTask implements Runnable{
 
     @Override
     public void run() {
-        if(shuttingDown) return; // Halt execution when flag is set
+        if(this.shuttingDown) return; // Halt execution when flag is set
         if(wasSleeping()) {
+            this.notifier.getPingResults().clear();
+        }
+
+        if(checkJVMKeepingUp()){
+            this.notifier.restartTask();
             SystemTrayUtils.sendNotification(TrayIcon.MessageType.INFO,"Monitoring resumed after system halt");
-            NetworkNotifier.getInstance().getPingResults().clear();
+            return;
         }
 
         this.lastTickTime = System.currentTimeMillis();
@@ -49,6 +54,14 @@ public class PingingTask implements Runnable{
         }
 
         this.endpointCheckIndex++; // Increment index, don't always check in the same endpoint.
+    }
+
+    /**
+     * If ticks are executed at faster pace than needed
+     */
+    private boolean checkJVMKeepingUp(){
+        var time = (System.currentTimeMillis() - this.lastTickTime);
+        return time < (this.notifier.getConfiguration().getPingInterval() * 1000L) / 2;
     }
 
     /**

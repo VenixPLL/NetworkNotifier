@@ -17,3 +17,8 @@ Preconfigured endpoints leads to google/cloudflare dns servers.
 ## TODO
 - Fix sleep issue with malformed ping reports
 - Fix sleep issue with keeping up ticks by JVM (Just restart the thread)
+
+## Building
+- You can build this project using Maven 
+```mvn clean compile assembly:single```
+- Or create an artifact with dependencies in IntelliJ
